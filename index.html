@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Application Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      background-color: #005e40;
+    }
+
+    header, footer {
+      background-color: brown;
+      color: white;
+      padding: 15px 0;
+    }
+
+    nav {
+      background-color: brown;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-nav {
+      background-color: brown;
+      color: white;
+      border: none;
+      flex: 1 1 180px;
+      margin: 5px;
+      padding: 10px 20px;
+      text-align: center;
+      font-weight: bold;
+      letter-spacing: 1px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-nav:hover {
+      background-color: brown;
+      color: white;
+      box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .btn-nav {
+        flex: 1 1 100%;
+      }
+    }
+
+    .form-section {
+      display: none;
+      transition: all 0.3s ease;
+    }
+
+    .active-section {
+      display: block;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+
+    .section-container {
+      max-width: 700px;
+      margin: 30px auto;
+      background: linear-gradient(135deg, #e0f7fa, #c8e6c9, #fce4ec);
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      flex: 1;
+    }
+
+    .content-wrapper {
+      flex: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="text-center">
+    <h2>Welcome to the Student Application Portal</h2>
+  </header>
+
+  <nav class="d-flex justify-content-center py-2">
+  <button class="btn btn-sm btn-nav" onclick="showSection('studentForm')">STUDENT FORM</button>
+  <a href="biodata.html" class="btn btn-sm btn-nav">BIODATA</a>
+  <a href="hobbies.html" class="btn btn-sm btn-nav">HOBBIES</a>
+  <a href="friends.html" class="btn btn-sm btn-nav">FRIENDS</a>
+  <a href="favorites.html" class="btn btn-sm btn-nav">FAVOURITES</a>
+  <a href="ambition.html" class="btn btn-sm btn-nav">AMBITION</a>
+</nav>
+
+  <div class="content-wrapper">
+
+    <div id="studentForm" class="form-section section-container active-section">
+      <h3 class="text-center mb-4">Student Details Form</h3>
+      <form onsubmit="return false;">
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-control" id="studentName">
+          <span id="studentNameError" class="error"></span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email Address</label>
+          <input type="text" class="form-control" id="studentEmail">
+          <span id="emailError" class="error"></span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Phone</label>
+          <input type="text" class="form-control" id="studentPhone">
+          <span id="studentPhoneError" class="error"></span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">College Name</label>
+          <input type="text" class="form-control" id="collegeName">
+          <span id="collegeNameError" class="error"></span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Department</label>
+          <input type="text" class="form-control" id="departmentName">
+          <span id="departmentNameError" class="error"></span>
+        </div>
+        <div class="text-center">
+          <button type="button" class="btn btn-success" onclick="submitForm()">Submit</button>
+        </div>
+      </form>
+    </div>
+
+  <footer class="text-center">
+    <p>&copy; 2025 Student Portal. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function showSection(id) {
+      const sections = document.querySelectorAll('.form-section');
+      sections.forEach(section => section.classList.remove('active-section'));
+      document.getElementById(id).classList.add('active-section');
+    }
+
+    function validateForm() {
+      document.getElementById("studentNameError").innerText = "";
+      document.getElementById("emailError").innerText = "";
+      document.getElementById("studentPhoneError").innerText = "";
+      document.getElementById("collegeNameError").innerText = "";
+      document.getElementById("departmentNameError").innerText = "";
+
+      let valid = true;
+      const name = document.getElementById("studentName").value.trim();
+      const email = document.getElementById("studentEmail").value.trim();
+      const phone = document.getElementById("studentPhone").value.trim();
+      const clg = document.getElementById("collegeName").value.trim();
+      const dept = document.getElementById("departmentName").value.trim();
+
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      const phonePattern = /^[0-9]{10}$/;
+
+      if (name === "") {
+        document.getElementById("studentNameError").innerText = "Name is required";
+        valid = false;
+      }
+
+      if (email === "") {
+        document.getElementById("emailError").innerText = "Email is required";
+        valid = false;
+      } else if (!email.match(emailPattern)) {
+        document.getElementById("emailError").innerText = "Enter a valid email";
+        valid = false;
+      }
+
+      if (phone === "") {
+        document.getElementById("studentPhoneError").innerText = "Phone is required";
+        valid = false;
+      } else if (!phone.match(phonePattern)) {
+        document.getElementById("studentPhoneError").innerText = "Enter 10-digit number";
+        valid = false;
+      }
+
+      if (clg === "") {
+        document.getElementById("collegeNameError").innerText = "College name is required";
+        valid = false;
+      }
+
+      if (dept === "") {
+        document.getElementById("departmentNameError").innerText = "Department is required";
+        valid = false;
+      }
+
+      return valid;
+    }
+
+    function submitForm() {
+      if (!validateForm()) return alert("Please fill the boxes before submitting.");
+      alert("Form submitted successfully!");
+      document.querySelector("#studentForm form")?.reset();
+      document.querySelectorAll(".error").forEach(e => e.textContent = "");
+    }
+  </script>
+
+</body>
+</html>

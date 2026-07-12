@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Validation with Span</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: inline-block;
+      width: 130px;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Contact Form</h2>
+  <form id="myForm" onsubmit="return validateForm()">
+    
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name">
+      <span id="nameError" class="error"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="text" id="email">
+      <span id="emailError" class="error"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone:</label>
+      <input type="text" id="phone">
+      <span id="phoneError" class="error"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="clg">College Name:</label>
+      <input type="text" id="clg">
+      <span id="collegeError" class="error"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="dept">Department:</label>
+      <input type="text" id="dept">
+      <span id="deptError" class="error"></span>
+    </div>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    function validateForm() {
+      // Clear previous errors
+      document.getElementById("nameError").innerText = "";
+      document.getElementById("emailError").innerText = "";
+      document.getElementById("phoneError").innerText = "";
+      document.getElementById("collegeError").innerText = "";
+      document.getElementById("deptError").innerText = "";
+
+      let valid = true;
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const clg = document.getElementById("clg").value.trim();
+      const dept = document.getElementById("dept").value.trim();
+
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      const phonePattern = /^[0-9]{10}$/;
+
+      if (name === "") {
+        document.getElementById("nameError").innerText = "Name is required";
+        valid = false;
+      }
+
+      if (email === "") {
+        document.getElementById("emailError").innerText = "Email is required";
+        valid = false;
+      } else if (!email.match(emailPattern)) {
+        document.getElementById("emailError").innerText = "Enter a valid email";
+        valid = false;
+      }
+
+      if (phone === "") {
+        document.getElementById("phoneError").innerText = "Phone is required";
+        valid = false;
+      } else if (!phone.match(phonePattern)) {
+        document.getElementById("phoneError").innerText = "Enter a valid 10-digit phone number";
+        valid = false;
+      }
+
+      if (clg === "") {
+        document.getElementById("collegeError").innerText = "College Name is required";
+        valid = false;
+      }
+
+      if (dept === "") {
+        document.getElementById("deptError").innerText = "Department is required";
+        valid = false;
+      }
+
+      return valid;
+    }
+  </script>
+</body>
+</html>
